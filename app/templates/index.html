@@ -1,0 +1,274 @@
+<!-- filepath: e:\Nagendra\projects\house-price-prediction-ml-project\app\templates\index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 House Price Predictor</h1>
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="bedrooms">Bedrooms:</label>
+                <input type="number" id="bedrooms" name="bedrooms" min="0" max="20" required>
+                <div class="help-text">Number of bedrooms (0-20)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="bathrooms">Bathrooms:</label>
+                <input type="number" id="bathrooms" name="bathrooms" step="0.5" min="0" max="10" required>
+                <div class="help-text">Number of bathrooms (0-10)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sqft_living">Sqft Living:</label>
+                <input type="number" id="sqft_living" name="sqft_living" min="100" max="10000" required>
+                <div class="help-text">Living area square footage</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sqft_lot">Sqft Lot:</label>
+                <input type="number" id="sqft_lot" name="sqft_lot" min="100" max="50000" required>
+                <div class="help-text">Lot size square footage</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="floors">Floors:</label>
+                <input type="number" id="floors" name="floors" step="0.5" min="0.5" max="4" required>
+                <div class="help-text">Number of floors (0.5-4)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="waterfront">Waterfront:</label>
+                <select id="waterfront" name="waterfront" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+                <div class="help-text">Property on waterfront</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="view">View Rating:</label>
+                <select id="view" name="view" required>
+                    <option value="0">None (0)</option>
+                    <option value="1">Fair (1)</option>
+                    <option value="2">Average (2)</option>
+                    <option value="3">Good (3)</option>
+                    <option value="4">Excellent (4)</option>
+                </select>
+                <div class="help-text">Quality of view from property</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="condition">Condition:</label>
+                <select id="condition" name="condition" required>
+                    <option value="1">Poor (1)</option>
+                    <option value="2">Fair (2)</option>
+                    <option value="3">Average (3)</option>
+                    <option value="4">Good (4)</option>
+                    <option value="5">Excellent (5)</option>
+                </select>
+                <div class="help-text">Overall condition of the property</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sqft_above">Sqft Above:</label>
+                <input type="number" id="sqft_above" name="sqft_above" min="0" max="8000" required>
+                <div class="help-text">Above ground square footage</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sqft_basement">Sqft Basement:</label>
+                <input type="number" id="sqft_basement" name="sqft_basement" min="0" max="4000" value="0">
+                <div class="help-text">Basement square footage (0 if no basement)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="yr_built">Year Built:</label>
+                <input type="number" id="yr_built" name="yr_built" min="1900" max="2024" required>
+                <div class="help-text">Year the house was built</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="yr_renovated">Year Renovated:</label>
+                <input type="number" id="yr_renovated" name="yr_renovated" min="0" max="2024" value="0">
+                <div class="help-text">Year of renovation (0 if never renovated)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="city">City:</label>
+                <select id="city" name="city" required>
+                    <option value="">Select City</option>
+                    <option value="Seattle">Seattle</option>
+                    <option value="Bellevue">Bellevue</option>
+                    <option value="Redmond">Redmond</option>
+                    <option value="Kirkland">Kirkland</option>
+                    <option value="Sammamish">Sammamish</option>
+                    <option value="Mercer Island">Mercer Island</option>
+                    <option value="Issaquah">Issaquah</option>
+                    <option value="Woodinville">Woodinville</option>
+                    <option value="Bothell">Bothell</option>
+                    <option value="Kenmore">Kenmore</option>
+                    <option value="Shoreline">Shoreline</option>
+                    <option value="Edmonds">Edmonds</option>
+                    <option value="Lynnwood">Lynnwood</option>
+                    <option value="Mountlake Terrace">Mountlake Terrace</option>
+                    <option value="Brier">Brier</option>
+                    <option value="Mukilteo">Mukilteo</option>
+                    <option value="Everett">Everett</option>
+                    <option value="Mill Creek">Mill Creek</option>
+                    <option value="Snohomish">Snohomish</option>
+                </select>
+                <div class="help-text">Select the city where the property is located</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="statezip">State Zip:</label>
+                <select id="statezip" name="statezip" required>
+                    <option value="">Select Zip Code</option>
+                    <option value="WA 98002">WA 98002 (Bellevue)</option>
+                    <option value="WA 98004">WA 98004 (Bellevue)</option>
+                    <option value="WA 98005">WA 98005 (Bellevue)</option>
+                    <option value="WA 98006">WA 98006 (Bellevue)</option>
+                    <option value="WA 98007">WA 98007 (Bellevue)</option>
+                    <option value="WA 98008">WA 98008 (Bellevue)</option>
+                    <option value="WA 98009">WA 98009 (Bellevue)</option>
+                    <option value="WA 98010">WA 98010 (Bellevue)</option>
+                    <option value="WA 98011">WA 98011 (Bellevue)</option>
+                    <option value="WA 98012">WA 98012 (Bellevue)</option>
+                    <option value="WA 98014">WA 98014 (Bellevue)</option>
+                    <option value="WA 98015">WA 98015 (Bellevue)</option>
+                    <option value="WA 98019">WA 98019 (Bellevue)</option>
+                    <option value="WA 98020">WA 98020 (Bellevue)</option>
+                    <option value="WA 98021">WA 98021 (Bellevue)</option>
+                    <option value="WA 98022">WA 98022 (Bellevue)</option>
+                    <option value="WA 98023">WA 98023 (Bellevue)</option>
+                    <option value="WA 98024">WA 98024 (Bellevue)</option>
+                    <option value="WA 98025">WA 98025 (Bellevue)</option>
+                    <option value="WA 98026">WA 98026 (Bellevue)</option>
+                    <option value="WA 98027">WA 98027 (Bellevue)</option>
+                    <option value="WA 98028">WA 98028 (Bellevue)</option>
+                    <option value="WA 98029">WA 98029 (Bellevue)</option>
+                    <option value="WA 98030">WA 98030 (Bellevue)</option>
+                    <option value="WA 98031">WA 98031 (Bellevue)</option>
+                    <option value="WA 98032">WA 98032 (Bellevue)</option>
+                    <option value="WA 98033">WA 98033 (Bellevue)</option>
+                    <option value="WA 98034">WA 98034 (Bellevue)</option>
+                    <option value="WA 98035">WA 98035 (Bellevue)</option>
+                    <option value="WA 98036">WA 98036 (Bellevue)</option>
+                    <option value="WA 98037">WA 98037 (Bellevue)</option>
+                    <option value="WA 98038">WA 98038 (Bellevue)</option>
+                    <option value="WA 98039">WA 98039 (Bellevue)</option>
+                    <option value="WA 98040">WA 98040 (Bellevue)</option>
+                    <option value="WA 98041">WA 98041 (Bellevue)</option>
+                    <option value="WA 98042">WA 98042 (Bellevue)</option>
+                    <option value="WA 98043">WA 98043 (Bellevue)</option>
+                    <option value="WA 98044">WA 98044 (Bellevue)</option>
+                    <option value="WA 98045">WA 98045 (Bellevue)</option>
+                    <option value="WA 98046">WA 98046 (Bellevue)</option>
+                    <option value="WA 98047">WA 98047 (Bellevue)</option>
+                    <option value="WA 98050">WA 98050 (Bellevue)</option>
+                    <option value="WA 98051">WA 98051 (Bellevue)</option>
+                    <option value="WA 98052">WA 98052 (Redmond)</option>
+                    <option value="WA 98053">WA 98053 (Redmond)</option>
+                    <option value="WA 98054">WA 98054 (Redmond)</option>
+                    <option value="WA 98055">WA 98055 (Redmond)</option>
+                    <option value="WA 98056">WA 98056 (Redmond)</option>
+                    <option value="WA 98057">WA 98057 (Redmond)</option>
+                    <option value="WA 98058">WA 98058 (Redmond)</option>
+                    <option value="WA 98059">WA 98059 (Redmond)</option>
+                    <option value="WA 98065">WA 98065 (Redmond)</option>
+                    <option value="WA 98070">WA 98070 (Redmond)</option>
+                    <option value="WA 98071">WA 98071 (Redmond)</option>
+                    <option value="WA 98072">WA 98072 (Redmond)</option>
+                    <option value="WA 98073">WA 98073 (Redmond)</option>
+                    <option value="WA 98074">WA 98074 (Redmond)</option>
+                    <option value="WA 98075">WA 98075 (Redmond)</option>
+                    <option value="WA 98077">WA 98077 (Redmond)</option>
+                    <option value="WA 98083">WA 98083 (Redmond)</option>
+                    <option value="WA 98092">WA 98092 (Redmond)</option>
+                    <option value="WA 98093">WA 98093 (Redmond)</option>
+                    <option value="WA 98094">WA 98094 (Redmond)</option>
+                    <option value="WA 98095">WA 98095 (Redmond)</option>
+                    <option value="WA 98096">WA 98096 (Redmond)</option>
+                    <option value="WA 98097">WA 98097 (Redmond)</option>
+                    <option value="WA 98098">WA 98098 (Redmond)</option>
+                    <option value="WA 98099">WA 98099 (Redmond)</option>
+                    <option value="WA 98101">WA 98101 (Seattle)</option>
+                    <option value="WA 98102">WA 98102 (Seattle)</option>
+                    <option value="WA 98103">WA 98103 (Seattle)</option>
+                    <option value="WA 98104">WA 98104 (Seattle)</option>
+                    <option value="WA 98105">WA 98105 (Seattle)</option>
+                    <option value="WA 98106">WA 98106 (Seattle)</option>
+                    <option value="WA 98107">WA 98107 (Seattle)</option>
+                    <option value="WA 98108">WA 98108 (Seattle)</option>
+                    <option value="WA 98109">WA 98109 (Seattle)</option>
+                    <option value="WA 98110">WA 98110 (Seattle)</option>
+                    <option value="WA 98111">WA 98111 (Seattle)</option>
+                    <option value="WA 98112">WA 98112 (Seattle)</option>
+                    <option value="WA 98113">WA 98113 (Seattle)</option>
+                    <option value="WA 98114">WA 98114 (Seattle)</option>
+                    <option value="WA 98115">WA 98115 (Seattle)</option>
+                    <option value="WA 98116">WA 98116 (Seattle)</option>
+                    <option value="WA 98117">WA 98117 (Seattle)</option>
+                    <option value="WA 98118">WA 98118 (Seattle)</option>
+                    <option value="WA 98119">WA 98119 (Seattle)</option>
+                    <option value="WA 98121">WA 98121 (Seattle)</option>
+                    <option value="WA 98122">WA 98122 (Seattle)</option>
+                    <option value="WA 98125">WA 98125 (Seattle)</option>
+                    <option value="WA 98126">WA 98126 (Seattle)</option>
+                    <option value="WA 98127">WA 98127 (Seattle)</option>
+                    <option value="WA 98129">WA 98129 (Seattle)</option>
+                    <option value="WA 98131">WA 98131 (Seattle)</option>
+                    <option value="WA 98133">WA 98133 (Seattle)</option>
+                    <option value="WA 98134">WA 98134 (Seattle)</option>
+                    <option value="WA 98136">WA 98136 (Seattle)</option>
+                    <option value="WA 98138">WA 98138 (Seattle)</option>
+                    <option value="WA 98139">WA 98139 (Seattle)</option>
+                    <option value="WA 98141">WA 98141 (Seattle)</option>
+                    <option value="WA 98144">WA 98144 (Seattle)</option>
+                    <option value="WA 98145">WA 98145 (Seattle)</option>
+                    <option value="WA 98146">WA 98146 (Seattle)</option>
+                    <option value="WA 98148">WA 98148 (Seattle)</option>
+                    <option value="WA 98154">WA 98154 (Seattle)</option>
+                    <option value="WA 98155">WA 98155 (Seattle)</option>
+                    <option value="WA 98158">WA 98158 (Seattle)</option>
+                    <option value="WA 98160">WA 98160 (Seattle)</option>
+                    <option value="WA 98161">WA 98161 (Seattle)</option>
+                    <option value="WA 98164">WA 98164 (Seattle)</option>
+                    <option value="WA 98166">WA 98166 (Seattle)</option>
+                    <option value="WA 98168">WA 98168 (Seattle)</option>
+                    <option value="WA 98170">WA 98170 (Seattle)</option>
+                    <option value="WA 98171">WA 98171 (Seattle)</option>
+                    <option value="WA 98174">WA 98174 (Seattle)</option>
+                    <option value="WA 98175">WA 98175 (Seattle)</option>
+                    <option value="WA 98177">WA 98177 (Seattle)</option>
+                    <option value="WA 98178">WA 98178 (Seattle)</option>
+                    <option value="WA 98181">WA 98181 (Seattle)</option>
+                    <option value="WA 98184">WA 98184 (Seattle)</option>
+                    <option value="WA 98185">WA 98185 (Seattle)</option>
+                    <option value="WA 98188">WA 98188 (Seattle)</option>
+                    <option value="WA 98190">WA 98190 (Seattle)</option>
+                    <option value="WA 98191">WA 98191 (Seattle)</option>
+                    <option value="WA 98194">WA 98194 (Seattle)</option>
+                    <option value="WA 98195">WA 98195 (Seattle)</option>
+                    <option value="WA 98198">WA 98198 (Seattle)</option>
+                    <option value="WA 98199">WA 98199 (Seattle)</option>
+                </select>
+                <div class="help-text">Select the zip code where the property is located</div>
+            </div>
+            
+            <input type="submit" value="Predict House Price">
+        </form>
+        
+        {% if prediction_text %}
+            <div class="result {% if 'Error' in prediction_text %}error{% else %}success{% endif %}">
+                <h2>{{ prediction_text }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
